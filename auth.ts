@@ -57,6 +57,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   ],
 
   secret: process.env.NEXTAUTH_SECRET,
+  // Required for production hosting behind a proxy
+  trustHost: true,
+  // Enable to see detailed logs
+  //debug: true,
 
   session: {
     strategy: "jwt",

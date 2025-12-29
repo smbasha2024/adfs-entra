@@ -10,16 +10,13 @@ export default async function ErrorPage({
   // Await the searchParams Promise
   const params = await searchParams;
   const error = params.error || 'An error occurred during authentication';
+  console.log("#################### BASHA ###################", error)
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-red-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
+    <div className="min-h-screen flex items-center ">
+      <div>
         <div className="text-center">
-          <div className="mx-auto h-12 w-12 bg-red-100 rounded-full flex items-center justify-center mb-4">
-            <svg className="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </div>
+          
           <h1 className="text-3xl font-bold text-gray-900">
             Authentication Error
           </h1>
