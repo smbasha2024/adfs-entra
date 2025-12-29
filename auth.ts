@@ -37,7 +37,7 @@ const providerConfig: any = {
 // Use metadata URL if provided, otherwise use direct configuration
 if (process.env.IDP_METADATA_URL) {
   providerConfig.idpMetadataUrl = process.env.IDP_METADATA_URL;
-  console.log("📡 Using IdP metadata URL for configuration");
+  console.log("📡 Using IdP metadata URL for configuration!");
 } else if (process.env.SAML_ENTRY_POINT && process.env.SAML_CERT) {
   providerConfig.entryPoint = process.env.SAML_ENTRY_POINT;
   providerConfig.cert = process.env.SAML_CERT;
