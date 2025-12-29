@@ -3,6 +3,8 @@
 import { useState, useRef } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
 
+import { signIn, signOut, useSession } from "next-auth/react"
+
 interface LoginFormProps {
   onLoginSuccess: (token: string, userInfo: any) => void;
   onMFARequired: (sessionId: string, email: string) => void;
@@ -119,7 +121,7 @@ export default function LoginForm({ onLoginSuccess, onMFARequired }: LoginFormPr
 
       <div className="auth-options">
         <button 
-          onClick={() => {/* Implement social login */}}
+          onClick={() => {signIn("azure-ad")}}
           disabled={loading}
         >
           Sign in with Azure AD

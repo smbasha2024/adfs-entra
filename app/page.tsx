@@ -1,12 +1,14 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import LoginForm from '../app/components/LoginForm';
-import MFAForm from '../app/components/MFAForm';
-import PasskeyForm from '../app/components/PasskeyForm';
-import Dashboard from '../app/components/Dashboard';
+import LoginForm from './components/LoginForm';
+import MFAForm from './components/MFAForm';
+import PasskeyForm from './components/PasskeyForm';
+import Dashboard from './components/Dashboard';
 
 type AuthStep = 'login' | 'mfa' | 'passkey' | 'dashboard';
+
+import { signIn, signOut, useSession } from "next-auth/react"
 
 export default function Home() {
   const [currentStep, setCurrentStep] = useState<AuthStep>('login');
@@ -109,7 +111,7 @@ export default function Home() {
                     Use Passkey
                   </button>
                   <button 
-                    onClick={() => {/* Implement social login */}}
+                    onClick={() => {signIn("azure-ad")}}
                     disabled={loading}
                     className="social-btn"
                   >

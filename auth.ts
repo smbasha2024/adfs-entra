@@ -18,10 +18,11 @@ if (!process.env.NEXTAUTH_SECRET) {
   throw new Error("NEXTAUTH_SECRET environment variable is required");
 }
 
+/*
 if (!process.env.AUTH_ISSUER) {
   console.warn("⚠️ AUTH_ISSUER environment variable is not set");
 }
-
+*/
 // Build provider configuration
 const providerConfig: any = {
   issuer: process.env.AUTH_ISSUER || "http://localhost:3000",
