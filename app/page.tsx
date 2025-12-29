@@ -18,11 +18,13 @@ export default function Home() {
   const [userInfo, setUserInfo] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
+  const { data: session } = useSession()
+
   // Check for existing session on component mount
   useEffect(() => {
     const token = localStorage.getItem('app-a-token');
     const user = localStorage.getItem('app-a-user');
-    
+    console.log("############# Auth Token ############", token);
     if (token && user) {
       setAuthToken(token);
       setUserInfo(JSON.parse(user));
@@ -40,6 +42,7 @@ export default function Home() {
     setCurrentStep('dashboard');
   };
 
+  /*
   const handleMFARequired = (sessionId: string, email: string) => {
     setSessionId(sessionId);
     setUserEmail(email);
@@ -67,7 +70,7 @@ export default function Home() {
   const handlePasskeySuccess = (token: string, userInfo: any) => {
     handleLoginSuccess(token, userInfo);
   };
-
+*/
   if (loading) {
     return (
       <div className="loading-container">
@@ -77,74 +80,60 @@ export default function Home() {
     );
   }
 
+  if (session) {
+    return (
+      <div className="p-8">
+        <h1 className="text-xl font-bold">Signed In</h1>
+        <pre className="mt-4 bg-gray-100 p-4 rounded">
+          {JSON.stringify(session, null, 2)}
+        </pre>
+
+        <button
+          onClick={() => signOut()}
+          className="mt-4 bg-red-600 text-white px-4 py-2 rounded"
+        >
+          Sign Out
+        </button>
+      </div>
+    )
+  }
+
   return (
     <div className="app-container">
       <header className="app-header">
         <div className="header-content">
           <h1>App ADFS Entra</h1>
           <nav className="app-nav">
-            {currentStep === 'dashboard' && (
+            {/*currentStep === 'dashboard' && (
               <button onClick={handleLogout} className="logout-btn">
                 Sign Out
               </button>
-            )}
+            )*/}
           </nav>
         </div>
       </header>
 
       <main className="app-main">
-        <div className="auth-container">
-          {currentStep === 'login' && (
-            <div className="login-step">
-              <LoginForm 
-                onLoginSuccess={handleLoginSuccess}
-                onMFARequired={handleMFARequired}
-              />
-              
-              <div className="alternative-auth">
-                <h3>Or authenticate with:</h3>
-                <div className="auth-options">
-                  <button 
-                    onClick={handlePasskeyAuth}
-                    className="social-btn"
-                  >
-                    Use Passkey
-                  </button>
-                  <button 
-                    onClick={() => {signIn("azure-ad")}}
-                    disabled={loading}
-                    className="social-btn"
-                  >
-                    Sign in with Azure AD
-                  </button>
-                  
-                </div>
-              </div>
+        <div className="auth-container" style={{ textAlign: "center" }}>
+          <h2>Authenticate with:</h2>
+          <div className="alternative-auth">
+            <div className="auth-options">
+              <button 
+                onClick={() => signIn("azure-ad")}
+                disabled={loading}
+                className="social-btn"
+              >
+                Sign in with Azure AD
+              </button>
+
+              <button 
+                //onClick={handlePasskeyAuth}
+                className="social-btn"
+              >
+                Use Passkey
+              </button>
             </div>
-          )}
-
-          {currentStep === 'mfa' && (
-            <MFAForm
-              sessionId={sessionId}
-              email={userEmail}
-              onVerifySuccess={handleLoginSuccess}
-              onBack={handleBackToLogin}
-            />
-          )}
-
-          {currentStep === 'passkey' && (
-            <PasskeyForm
-              onAuthSuccess={handlePasskeySuccess}
-              onBack={handleBackToLogin}
-            />
-          )}
-
-          {currentStep === 'dashboard' && userInfo && (
-            <Dashboard 
-              userInfo={userInfo}
-              onLogout={handleLogout}
-            />
-          )}
+          </div>
         </div>
       </main>
 
