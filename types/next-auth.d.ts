@@ -5,13 +5,17 @@ import NextAuth from "next-auth"
 
 declare module "next-auth" {
   interface Profile {
-    nameID?: string;
+    //nameID?: string;
     id?: string;
     firstName?: string;
     lastName?: string;
-    roles?: string[];
+    //roles?: string[];
     upn?: string;
-    samAccountName?: string;
+    //samAccountName?: string;
+    email?: string
+    givenName?: string
+    familyName?: string
+    username?: string
   }
 
   interface Session {
@@ -21,12 +25,12 @@ declare module "next-auth" {
 
   interface User extends DefaultUser {
       id?: string;
-      nameID?: string;
+      //nameID?: string;
       firstName?: string;
       lastName?: string;
-      roles?: string[];
+      //roles?: string[];
       upn?: string;
-      samAccountName?: string;
+      //samAccountName?: string;
   }
 }
 
@@ -34,5 +38,9 @@ declare module "next-auth/jwt" {
   interface JWT {
     accessToken?: string
     idToken?: string
+    email?: string
+    givenName?: string
+    familyName?: string
+    userName?: string
   }
 }

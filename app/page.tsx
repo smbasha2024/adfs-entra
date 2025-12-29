@@ -1,10 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import LoginForm from './components/LoginForm';
-import MFAForm from './components/MFAForm';
-import PasskeyForm from './components/PasskeyForm';
-import Dashboard from './components/Dashboard';
 
 type AuthStep = 'login' | 'mfa' | 'passkey' | 'dashboard';
 

@@ -123,25 +123,7 @@ export default async function DashboardPage() {
                 </div>
               </div>
 
-              {/* Roles Section */}
-              {session.user.roles && session.user.roles.length > 0 && (
-                <div className="mt-8 pt-6 border-t border-gray-200">
-                  <h3 className="text-lg font-medium text-gray-900 mb-4 flex items-center">
-                    <Shield className="h-5 w-5 mr-2 text-green-600" />
-                    User Roles & Permissions
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {session.user.roles.map((role: string, index: number) => (
-                      <span
-                        key={index}
-                        className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800"
-                      >
-                        {role}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
+              
             </div>
           </div>
 

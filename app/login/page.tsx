@@ -1,5 +1,5 @@
 // File: app/login/page.tsx
-import LoginForm from '../components/auth/LoginForm';
+
 
 export default function LoginPage({
   searchParams,
@@ -26,10 +26,6 @@ export default function LoginPage({
           </div>
         </div>
 
-        <LoginForm 
-          error={searchParams.error}
-          callbackUrl={searchParams.callbackUrl}
-        />
 
         <div className="text-center text-sm text-gray-500 pt-6 border-t">
           <p>You will be securely redirected to your organization&apos;s login page.</p>
