@@ -1,7 +1,8 @@
 // auth.ts - Updated with type-safe code
 import NextAuth from "next-auth";
-import BoxyHQSAMLProvider from "next-auth/providers/boxyhq-saml";
+//import BoxyHQSAMLProvider from "next-auth/providers/boxyhq-saml";
 import type { Profile } from "next-auth";
+import MicrosoftEntraID from "next-auth/providers/microsoft-entra-id";
 
 // Define extended profile type
 interface SamlProfile extends Profile {
@@ -25,13 +26,13 @@ if (!process.env.AUTH_ISSUER) {
 */
 // Build provider configuration
 const providerConfig: any = {
-  issuer: process.env.AUTH_ISSUER || "http://localhost:3000",
-  clientId: "dummy",
-  clientSecret: "dummy",
-  authorization: { params: { scope: "" } },
+  issuer: process.env.AUTH_ISSUER || "https://login.microsoftonline.com/4f275734-822b-40d5-8380-42d3d149ee7e/v2.0",
+  clientId: "26a1d906-e875-4006-b541-f5d0435c9f89",
+  clientSecret: "l4I8Q~RWjUQui3mqUYUtU8~ESPPaBGM5~FLbZbvU",
+  authorization: { params: { scope: "openid profile email" } },
   checks: ["pkce", "state"],
-  name: "Company SSO",
-  id: "boxyhq-saml",
+  name: "Azure Entra SSO",
+  id: "microsoft-entra-id",
 };
 
 // Use metadata URL if provided, otherwise use direct configuration
@@ -76,7 +77,8 @@ providerConfig.profile = (profile: any) => {
 // Create NextAuth configuration
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
-    BoxyHQSAMLProvider(providerConfig),
+    //BoxyHQSAMLProvider(providerConfig),
+    MicrosoftEntraID(providerConfig)
   ],
   secret: process.env.NEXTAUTH_SECRET,
   session: {

@@ -121,7 +121,7 @@ export default function LoginForm({ onLoginSuccess, onMFARequired }: LoginFormPr
 
       <div className="auth-options">
         <button 
-          onClick={() => {signIn("azure-ad")}}
+          onClick={() => {signIn("microsoft-entra-id")}}
           disabled={loading}
         >
           Sign in with Azure AD

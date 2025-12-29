@@ -119,7 +119,7 @@ export default function Home() {
           <div className="alternative-auth">
             <div className="auth-options">
               <button 
-                onClick={() => signIn("azure-ad")}
+                onClick={() => signIn("microsoft-entra-id")}
                 disabled={loading}
                 className="social-btn"
               >

@@ -18,7 +18,7 @@ export default function LoginForm({ error, callbackUrl }: LoginFormProps) {
     setIsLoading(true);
     
     try {
-      await signIn('boxyhq-saml', {
+      await signIn('microsoft-entra-id', {
         callbackUrl: callbackUrl || '/dashboard',
         redirect: true,
       });
