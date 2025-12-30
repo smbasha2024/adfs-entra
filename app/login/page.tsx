@@ -24,7 +24,6 @@ export default function LoginPage({
 
         <div className="text-center text-sm text-gray-500 pt-6 border-t">
           <p>You will be securely redirected to your organization&apos;s login page.</p>
-          <p className="mt-1">This application uses BoxyHQ SAML provider for authentication.</p>
         </div>
       </div>
     </div>

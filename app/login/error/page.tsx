@@ -13,14 +13,14 @@ export default async function ErrorPage({
   console.log("#################### BASHA ###################", error)
 
   return (
-    <div className="min-h-screen flex items-center ">
+    <div className=" flex items-center">
       <div>
         <div className="text-center">
           
-          <h1 className="text-3xl font-bold text-gray-900">
+          <h1 className="text-3xl font-bold text-white">
             Authentication Error
           </h1>
-          <p className="mt-2 text-gray-600">
+          <p className="mt-2 text-white">
             We couldn&apos;t sign you in
           </p>
         </div>
@@ -33,7 +33,7 @@ export default async function ErrorPage({
               </p>
             </div>
 
-            <div className="text-sm text-gray-600">
+            <div className="text-sm text-white">
               <p>Possible reasons:</p>
               <ul className="mt-2 space-y-1 list-disc list-inside">
                 <li>Your session may have expired</li>

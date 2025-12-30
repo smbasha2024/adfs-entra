@@ -119,15 +119,32 @@ export default function Home() {
                 disabled={loading}
                 className="social-btn"
               >
-                Sign in with Azure AD
+                Sign in with Azure Entra (OIDC)
               </button>
 
+              <button 
+                onClick={() => window.location.href = "/auth/saml/login"}
+                disabled={loading}
+                className="social-btn"
+              >
+                Sign in with Azure Entra (SAML)
+              </button>
+
+              <button 
+                //onClick={() => window.location.href = "/auth/saml"}
+                disabled={loading}
+                className="social-btn"
+              >
+                Sign in without Azure Entra
+              </button>
+              {/* 
               <button 
                 //onClick={handlePasskeyAuth}
                 className="social-btn"
               >
                 Use Passkey
               </button>
+              */}
             </div>
           </div>
         </div>
