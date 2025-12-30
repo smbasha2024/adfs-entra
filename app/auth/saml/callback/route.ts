@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
     const assertion = response?.["saml:Assertion"] || response?.["Assertion"];
 
     console.log("Parsed SAML Response:", JSON.stringify(response, null, 2));
-    
+
     if (!assertion) {
       // Encrypted assertion detected
       if (response?.["saml:EncryptedAssertion"]) {
@@ -100,7 +100,7 @@ export async function POST(req: NextRequest) {
 
     if (!subject) {
       return NextResponse.json(
-        { error: "No usable identity claim found" },
+        { error: "No usable identity claim found" , upn: upn, email: email,  response: response || null,},
         { status: 401 }
       );
     }
