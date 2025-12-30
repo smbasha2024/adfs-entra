@@ -123,13 +123,11 @@ export async function POST(req: NextRequest) {
       { expiresIn: "1h" }
     );
 
-    const res = NextResponse.redirect(
-      "https://adfsentra.onrender.com/dashboard"
-    );
+    const res = NextResponse.redirect("/dashboard");
 
     res.cookies.set("saml-session", token, {
       httpOnly: true,
-      secure: true,
+      secure: process.env.NODE_ENV === "production", // true only in prod HTTPS
       sameSite: "lax",
       path: "/",
     });
