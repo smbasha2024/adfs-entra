@@ -36,6 +36,8 @@ export async function POST(req: NextRequest) {
     const response =  parsed?.["samlp:Response"] || parsed?.["Response"];
     const assertion = response?.["saml:Assertion"] || response?.["Assertion"];
 
+    console.log("Parsed SAML Response:", JSON.stringify(response, null, 2));
+    
     if (!assertion) {
       // Encrypted assertion detected
       if (response?.["saml:EncryptedAssertion"]) {
@@ -66,32 +68,23 @@ export async function POST(req: NextRequest) {
     }
 
     /* 3. Normalize attributes */
-    let attributes = attributeStatement["saml:Attribute"];
+    let attributes = attributeStatement["saml:Attribute"] || attributeStatement["Attribute"];
 
     if (!attributes) {
       return NextResponse.json(
-        { error: "No SAML attributes found" },
+        { error: "No SAML attributes found", rawAttributeStatement: attributeStatement },
         { status: 401 }
       );
     }
 
+    // Ensure attributes is always an array
     if (!Array.isArray(attributes)) {
       attributes = [attributes];
     }
 
-    const getClaim = (uri: string): string | undefined => {
-      const attr = attributes.find((a: any) => a?.$?.Name === uri);
-      const value = attr?.["saml:AttributeValue"];
-
-      if (Array.isArray(value)) {
-        return typeof value[0] === "string" ? value[0] : value[0]?._;
-      }
-
-      if (typeof value === "object") {
-        return value?._;
-      }
-
-      return value;
+    const getClaim = (uri: string) => {
+      const attr = attributes.find((a: any) => a.$.Name === uri);
+      return attr?.["saml:AttributeValue"] || attr?._; // "_" may contain value if xml2js parsed differently
     };
 
     /* 4. Extract identity */
