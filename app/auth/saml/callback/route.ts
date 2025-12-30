@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
     const response =  parsed?.["samlp:Response"] || parsed?.["Response"];
     const assertion = response?.["saml:Assertion"] || response?.["Assertion"];
 
-    console.log("Parsed SAML Response:", JSON.stringify(response, null, 2));
+    //console.log("Parsed SAML Response:", JSON.stringify(response, null, 2));
 
     if (!assertion) {
       // Encrypted assertion detected
@@ -83,8 +83,16 @@ export async function POST(req: NextRequest) {
     }
 
     const getClaim = (uri: string) => {
-      const attr = attributes.find((a: any) => a.$.Name === uri);
-      return attr?.["saml:AttributeValue"] || attr?._; // "_" may contain value if xml2js parsed differently
+      if (!attributes) return null;
+
+      // Normalize single attribute to array
+      const attrsArray = Array.isArray(attributes) ? attributes : [attributes];
+
+      const attr = attrsArray.find((a: any) => a?.$?.Name === uri);
+      if (!attr) return null;
+
+      // Check multiple possible locations for the value
+      return attr["saml:AttributeValue"] || attr["AttributeValue"] || attr._ || null;
     };
 
     /* 4. Extract identity */
@@ -93,7 +101,7 @@ export async function POST(req: NextRequest) {
     );
 
     const upn = getClaim(
-      "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/upn"
+      "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
     );
 
     const subject = upn || email;
