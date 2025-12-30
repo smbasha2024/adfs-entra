@@ -100,7 +100,7 @@ export async function POST(req: NextRequest) {
 
     if (!subject) {
       return NextResponse.json(
-        { error: "No usable identity claim found" , upn: upn, email: email,  response: response || null,},
+        { error: "No usable identity claim found" , upn: upn || null, email: email|| null,  response: response || null,},
         { status: 401 }
       );
     }
