@@ -33,13 +33,34 @@ export async function POST(req: NextRequest) {
       tagNameProcessors: [],
     });
 
-    const response = parsed?.["samlp:Response"];
-    const assertion = response?.["saml:Assertion"];
-    const attributeStatement = assertion?.["saml:AttributeStatement"];
+    const response =  parsed?.["samlp:Response"] || parsed?.["Response"];
+    const assertion = response?.["saml:Assertion"] || response?.["Assertion"];
+
+    if (!assertion) {
+      // Encrypted assertion detected
+      if (response?.["saml:EncryptedAssertion"]) {
+        return NextResponse.json(
+          {
+            error:
+              "Encrypted SAML assertion received. Disable assertion encryption or implement decryption.",
+              response: response || null,
+          },
+          { status: 401 }
+        );
+      }
+
+      return NextResponse.json(
+        { error: "SAML Assertion not found in response", response: response || null,},
+        { status: 401 }
+      );
+    }
+
+
+    const attributeStatement = assertion?.["saml:AttributeStatement"] || assertion?.["AttributeStatement"];
 
     if (!attributeStatement) {
       return NextResponse.json(
-        { error: "Invalid SAML assertion" },
+        { error: "Missing AttributeStatement in SAML assertion", response: response || null, },
         { status: 401 }
       );
     }
