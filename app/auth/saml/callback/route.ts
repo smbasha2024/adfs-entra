@@ -123,7 +123,9 @@ export async function POST(req: NextRequest) {
       { expiresIn: "1h" }
     );
 
-    const res = NextResponse.redirect("/dashboard");
+    const url = new URL("/dashboard", req.url);
+    const res = NextResponse.redirect(url);
+    //const res = NextResponse.redirect("https://adfsentra.onrender.com/dashboard");
 
     res.cookies.set("saml-session", token, {
       httpOnly: true,
