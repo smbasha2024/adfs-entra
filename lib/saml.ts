@@ -39,8 +39,7 @@ const verify: VerifyWithoutRequest = (
 
 export const samlStrategy = new SamlStrategy(
   {
-    entryPoint:
-      "https://login.microsoftonline.com/4f275734-822b-40d5-8380-42d3d149ee7e/saml2",
+    entryPoint:"https://login.microsoftonline.com/4f275734-822b-40d5-8380-42d3d149ee7e/saml2",
     issuer: "https://adfsentra.onrender.com/saml/metadata",
     callbackUrl: "https://adfsentra.onrender.com/auth/saml/callback",
     cert: process.env.AZURE_SAML_CERT!,
