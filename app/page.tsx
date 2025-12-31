@@ -131,7 +131,7 @@ export default function Home() {
               </button>
 
               <button 
-                //onClick={() => window.location.href = "/auth/saml"}
+                onClick={() => window.location.href = "/auth/adfssaml/login"}
                 disabled={loading}
                 className="social-btn"
               >
