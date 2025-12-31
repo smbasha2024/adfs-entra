@@ -135,7 +135,7 @@ export default function Home() {
                 disabled={loading}
                 className="social-btn"
               >
-                Sign in without Azure Entra
+                Sign in without Azure Entra (Direct ADFS)
               </button>
               {/* 
               <button 
