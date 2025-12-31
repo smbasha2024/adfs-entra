@@ -15,6 +15,8 @@ export default async function DashboardPage() {
   /* 1. Read SAML session cookie */
   const cookieStore = await cookies();
   const token = cookieStore.get("saml-session")?.value;
+  
+  console.log("###### Token ", token);
 
   if (!token) {
     return (

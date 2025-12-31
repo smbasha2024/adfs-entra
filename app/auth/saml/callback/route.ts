@@ -125,16 +125,22 @@ export async function POST(req: NextRequest) {
 
     //const url = new URL("/dashboard", req.url);
     //const res = NextResponse.redirect(url);
-    const res = NextResponse.redirect("https://adfsentra.onrender.com/components/saml/dashboard");
+    const res = NextResponse.redirect(
+      new URL("/dashboard", req.url),
+      303
+    );
 
     res.cookies.set("saml-session", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production", // true only in prod HTTPS
+      secure: true, //process.env.NODE_ENV === "production", // true only in prod HTTPS
       sameSite: "lax",
       path: "/",
+      domain: "adfsentra.onrender.com", // CRITICAL
+      maxAge: 60 * 60, // 1 hour
     });
 
     return res;
+    
   } catch (err) {
     console.error("SAML callback failure:", err);
     return NextResponse.json(
