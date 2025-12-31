@@ -126,7 +126,7 @@ export async function POST(req: NextRequest) {
     //const url = new URL("/dashboard", req.url);
     //const res = NextResponse.redirect(url);
     const res = NextResponse.redirect(
-      new URL("/dashboard", req.url),
+      new URL("https://adfsentra.onrender.com/components/saml/dashboard", req.url),
       303
     );
 
