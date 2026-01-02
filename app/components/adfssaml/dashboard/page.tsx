@@ -74,7 +74,7 @@ export default async function DashboardPage() {
           SAML-based authentication is successful
         </h1>
         <p className="text-gray-300 mb-8">
-          You are authenticated via Microsoft Entra ID → AD FS (SAML 2.0)
+          You are authenticated directly by On-Premise ADFS (using SAML 2.0)
         </p>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -105,7 +105,7 @@ export default async function DashboardPage() {
                 <label className="text-sm text-gray-400">Identity Provider</label>
                 <span className="inline-flex items-center px-3 py-1 rounded-full bg-green-100 text-green-800 text-sm">
                   <Shield className="h-4 w-4 mr-1" />
-                  Microsoft Entra ID (Federated to AD FS)
+                  ADFS Server using SAML 2.0
                 </span>
               </div>
             </div>

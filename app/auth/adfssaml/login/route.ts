@@ -5,20 +5,10 @@ import zlib from "zlib";
 import { v4 as uuidv4 } from "uuid";
 
 function buildSamlRequest() {
-  const id = "_" + uuidv4();
+  const id = "_" + crypto.randomUUID();
   const issueInstant = new Date().toISOString();
 
-  return `
-    <samlp:AuthnRequest
-      xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol"
-      xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion"
-      ID="${id}"
-      Version="2.0"
-      IssueInstant="${issueInstant}"
-      Destination="https://login.microsoftonline.com/${process.env.AZURE_AD_TENANT_ID}/saml2"
-      AssertionConsumerServiceURL="https://adfsentra.onrender.com/auth/saml/callback">
-      <saml:Issuer>urn:adfsentra-saml</saml:Issuer>
-    </samlp:AuthnRequest>`;
+  return `<samlp:AuthnRequest xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol" xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion" ID="${id}" Version="2.0" IssueInstant="${issueInstant}" Destination="https://fs.ad.ricago.in/adfs/ls/" AssertionConsumerServiceURL="https://adfsentra.onrender.com/auth/adfssaml/callback" ProtocolBinding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"> <saml:Issuer>https://adfsentra.onrender.com/adfssaml/metadata</saml:Issuer> <samlp:NameIDPolicy Format="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified" AllowCreate="true"/> </samlp:AuthnRequest>`;
 }
 
 export async function GET() {
@@ -40,10 +30,7 @@ export async function GET() {
   }
 
   const samlRequestUrl =
-    //`https://login.microsoftonline.com/${tenantId}/saml2?appid=${appId}`;
-    //`https://myapps.microsoft.com/signin/${appId}?tenantId=${tenantId}`;
-    `https://login.microsoftonline.com/${process.env.AZURE_AD_TENANT_ID}/saml2` +
-    `?SAMLRequest=${encoded}`;
+    `https://fs.ad.ricago.in/adfs/ls/?SAMLRequest=${encoded}`;
 
   return NextResponse.redirect(samlRequestUrl);
 }

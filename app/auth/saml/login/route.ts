@@ -8,17 +8,7 @@ function buildSamlRequest() {
   const id = "_" + uuidv4();
   const issueInstant = new Date().toISOString();
 
-  return `
-    <samlp:AuthnRequest
-      xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol"
-      xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion"
-      ID="${id}"
-      Version="2.0"
-      IssueInstant="${issueInstant}"
-      Destination="https://login.microsoftonline.com/${process.env.AZURE_AD_TENANT_ID}/saml2"
-      AssertionConsumerServiceURL="https://adfsentra.onrender.com/auth/saml/callback">
-      <saml:Issuer>urn:adfsentra-saml</saml:Issuer>
-    </samlp:AuthnRequest>`;
+  return `<samlp:AuthnRequest xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol" xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion" ID="${id}" Version="2.0" IssueInstant="${issueInstant}" Destination="https://login.microsoftonline.com/${process.env.AZURE_AD_TENANT_ID}/saml2" AssertionConsumerServiceURL="https://adfsentra.onrender.com/auth/saml/callback"> <saml:Issuer>urn:adfsentra-saml</saml:Issuer> </samlp:AuthnRequest>`;
 }
 
 export async function GET() {

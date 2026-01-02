@@ -56,7 +56,7 @@ export default async function DashboardPage() {
         <div className="max-w-7xl mx-auto px-6 h-16 flex justify-between items-center">
           <div className="flex items-center gap-2">
             <Key className="h-6 w-6 text-blue-600" />
-            <span className="text-3xl font-bold text-white">SAML Dashboard</span>
+            <span className="text-3xl font-bold text-white">Micrsoft Entra SAML Dashboard</span>
           </div>
 
           <form action="/auth/saml/logout" method="post">
@@ -71,7 +71,7 @@ export default async function DashboardPage() {
       {/* Main */}
       <main className="max-w-7xl mx-auto p-8">
         <h1 className="text-xl font-bold mb-2 text-white">
-          SAML-based authentication is successful
+          SAML-based authentication through Entra is successful
         </h1>
         <p className="text-gray-300 mb-8">
           You are authenticated via Microsoft Entra ID → AD FS (SAML 2.0)
@@ -105,7 +105,7 @@ export default async function DashboardPage() {
                 <label className="text-sm text-gray-400">Identity Provider</label>
                 <span className="inline-flex items-center px-3 py-1 rounded-full bg-green-100 text-green-800 text-sm">
                   <Shield className="h-4 w-4 mr-1" />
-                  Microsoft Entra ID (Federated to AD FS)
+                  Microsoft Entra ID (Federated to ADFS using SAML endpoint)
                 </span>
               </div>
             </div>
