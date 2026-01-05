@@ -8,7 +8,8 @@ function buildSamlRequest() {
   const id = "_" + uuidv4();
   const issueInstant = new Date().toISOString();
 
-  return `<samlp:AuthnRequest xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol" xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion" ID="${id}" Version="2.0" IssueInstant="${issueInstant}" Destination="https://login.microsoftonline.com/${process.env.AZURE_AD_TENANT_ID}/saml2" AssertionConsumerServiceURL="https://adfsentra.onrender.com/auth/saml/callback" ProtocolBinding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"> <saml:Issuer>urn:adfsentra-saml</saml:Issuer> <samlp:NameIDPolicy Format="urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress" AllowCreate="true"/> </samlp:AuthnRequest>`;
+  return `<samlp:AuthnRequest xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol" xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion" ID="${id}" Version="2.0" IssueInstant="${issueInstant}" Destination="https://login.microsoftonline.com/${process.env.AZURE_AD_TENANT_ID}/saml2" AssertionConsumerServiceURL="https://adfsentra.onrender.com/auth/saml/callback" ProtocolBinding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"> <saml:Issuer>urn:federation:MicrosoftOnline</saml:Issuer> <samlp:NameIDPolicy Format="urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress" AllowCreate="true"/> </samlp:AuthnRequest>`;
+  //basha@ad.ricago.in</saml:NameID>
 }
 
 export async function GET() {
@@ -17,6 +18,7 @@ export async function GET() {
   const appId = process.env.AUTH_SAML_APP_ID!;
 
   const xml = buildSamlRequest();
+  //console.log(xml);
 
   const encoded = Buffer.from(xml, "utf-8").toString("base64");
 
@@ -26,15 +28,6 @@ export async function GET() {
       { status: 500 }
     );
   }
-
-  /*
-  const redirectUrl =
-    `https://login.microsoftonline.com/${process.env.AZURE_AD_TENANT_ID}/saml2` +
-    `?SAMLRequest=${encodeURIComponent(encoded)}` +
-    `&RelayState=${encodeURIComponent("nextjs")}`;
-
-  return NextResponse.redirect(redirectUrl, 302);
-  */
 
   const html = `
 <!DOCTYPE html>
@@ -47,6 +40,7 @@ export async function GET() {
   </body>
 </html>`;
 
+  //console.log(html);
   return new NextResponse(html, {
     headers: { "Content-Type": "text/html" },
   });
