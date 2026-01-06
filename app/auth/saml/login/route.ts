@@ -18,7 +18,7 @@ export async function GET() {
   const appId = process.env.AUTH_SAML_APP_ID!;
 
   const xml = buildSamlRequest();
-  console.log(xml);
+  //console.log(xml);
 
   const encoded = Buffer.from(xml, "utf-8").toString("base64");
 

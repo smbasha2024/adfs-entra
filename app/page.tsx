@@ -115,11 +115,11 @@ export default function Home() {
           <div className="alternative-auth">
             <div className="auth-options">
               <button 
-                onClick={() => signIn("microsoft-entra-id")}
+                onClick={() => window.location.href = "/auth/adfssaml/login"}
                 disabled={loading}
                 className="social-btn"
               >
-                Sign in with Azure Entra (OIDC)
+                Sign in without Azure Entra (Direct ADFS)
               </button>
 
               <button 
@@ -131,12 +131,13 @@ export default function Home() {
               </button>
 
               <button 
-                onClick={() => window.location.href = "/auth/adfssaml/login"}
+                onClick={() => signIn("microsoft-entra-id")}
                 disabled={loading}
                 className="social-btn"
               >
-                Sign in without Azure Entra (Direct ADFS)
+                Sign in with Azure Entra (OIDC)
               </button>
+
               {/* 
               <button 
                 //onClick={handlePasskeyAuth}
