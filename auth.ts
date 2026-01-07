@@ -115,7 +115,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
      */
     async redirect({ url, baseUrl }) {
       if (url.startsWith(baseUrl)) {
-        return `${baseUrl}/dashboard`;
+        return `https://adfsentra.onrender.com/components/oidcsaml/dashboard`;
       }
       return url;
     },
