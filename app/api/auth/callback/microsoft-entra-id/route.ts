@@ -1,6 +1,7 @@
 // app/api/auth/callback/microsoft-entra-id/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import fetch from "node-fetch"; // or global fetch if Node 18+
+//import { getCodeVerifier } from "@/lib/utils/pkce"; // adjust path if needed
 
 export async function GET(req: NextRequest) {
   try {
@@ -16,6 +17,13 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: "Server misconfiguration" }, { status: 500 });
     }
 
+    // Read the PKCE verifier from cookie
+    const code_verifier = req.cookies.get("pkce_verifier")?.value;
+
+    if (!code_verifier) {
+      return NextResponse.json({ error: "Missing PKCE code_verifier" }, { status: 400 });
+    }
+
     // 1. Exchange authorization code for tokens
     const tokenResponse = await fetch(`https://login.microsoftonline.com/${process.env.AZURE_AD_TENANT_ID}/oauth2/v2.0/token`, {
       method: "POST",
@@ -28,6 +36,7 @@ export async function GET(req: NextRequest) {
         code,
         redirect_uri: "https://adfsentra.onrender.com/api/auth/callback/microsoft-entra-id",
         grant_type: "authorization_code",
+        code_verifier, // <-- MUST include this
         client_secret: process.env.AZURE_AD_CLIENT_SECRET,
       }),
     });
@@ -75,6 +84,9 @@ export async function GET(req: NextRequest) {
       domain: "adfsentra.onrender.com",
       maxAge: 60 * 60, // 1 hour
     });
+
+    // 6️⃣ Delete PKCE verifier cookie
+    //res.cookies.delete("pkce_verifier", {"path": "/api/auth/callback/microsoft-entra-id","domain": "adfsentra.onrender.com",});
 
     return res;
   } catch (err) {
