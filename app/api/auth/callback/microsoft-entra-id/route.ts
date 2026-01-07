@@ -18,12 +18,13 @@ export async function GET(req: NextRequest) {
     }
 
     // Read the PKCE verifier from cookie
+    /*
     const code_verifier = req.cookies.get("pkce_verifier")?.value;
 
     if (!code_verifier) {
       return NextResponse.json({ error: "Missing PKCE code_verifier" }, { status: 400 });
     }
-
+    */
     // 1. Exchange authorization code for tokens
     const tokenResponse = await fetch(`https://login.microsoftonline.com/${process.env.AZURE_AD_TENANT_ID}/oauth2/v2.0/token`, {
       method: "POST",
@@ -36,7 +37,7 @@ export async function GET(req: NextRequest) {
         code,
         redirect_uri: "https://adfsentra.onrender.com/api/auth/callback/microsoft-entra-id",
         grant_type: "authorization_code",
-        code_verifier, // <-- MUST include this
+        //code_verifier, // <-- MUST include this
         client_secret: process.env.AZURE_AD_CLIENT_SECRET,
       }),
     });
