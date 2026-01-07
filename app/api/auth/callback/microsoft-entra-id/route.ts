@@ -87,7 +87,9 @@ export async function GET(req: NextRequest) {
 
     // 6️⃣ Delete PKCE verifier cookie
     //res.cookies.delete("pkce_verifier", {"path": "/api/auth/callback/microsoft-entra-id","domain": "adfsentra.onrender.com",});
-
+     // Clear PKCE cookie (single-use)
+    res.cookies.delete("pkce_verifier");
+    
     return res;
   } catch (err) {
     console.error("OIDC callback failure:", err);
