@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
   // Create session
 
   return NextResponse.redirect(
-    new URL("/components/oidcsaml/dashboard", req.url),
+    new URL("https://adfsentra.onrender.com/components/oidcsaml/dashboard", req.url),
     303
   );
 }
